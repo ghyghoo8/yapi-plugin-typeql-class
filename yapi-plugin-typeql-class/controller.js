@@ -12,33 +12,10 @@ const htmlTemplete = require('./templete')
 //全局设置 nullable = false
 let setNullableTrue = false
 
-const { GoogleSpreadsheet } = require('google-spreadsheet');
-const SheetID = '18fOZHGGWWvnokAPGrqFMw8MQSNaMBZsA_fencx5PeFU'
 class typeqlClass extends baseController {
   constructor(ctx) {
     super(ctx);
     this.interfaceModel = yapi.getInst(interfaceModel);
-    this.doc = new GoogleSpreadsheet(SheetID);
-  }
-  // 获取 google docs 表格数据
-  async getIssuesOnlineFromGoogleSheet(ctx) {
-    // const secFilePath = path.join(__dirname,'possible-helix-271711-f9a5075fd600.json')
-    
-    // await this.doc.useServiceAccountAuth(require(secFilePath));
-    this.doc.useApiKey('AIzaSyCxSz2RttJ4ufIihngLZK3odRbY38vNglY');
-
-    await this.doc.loadInfo();
-
-    // 获取第一张表
-    const sheet = this.doc.sheetsByIndex[0]; // or use doc.sheetsById[id]
-
-    // 渲染模板
-    ejs.renderFile(path.join(__dirname, 'templete', 'issues.ejs'),
-      { id: sheet.title },
-      (err, str) => {
-      ctx.response.type = 'html'
-      ctx.response.body = err || str  
-    });
   }
 
   async getContent(ctx) {
